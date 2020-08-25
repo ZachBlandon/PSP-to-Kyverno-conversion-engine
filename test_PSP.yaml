@@ -1,0 +1,73 @@
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: example
+spec:
+  allowPrivilegeEscalation: false
+  allowedCSIDrivers:
+    name:
+    - testCSIDriver
+    - testCSIDriver1
+  allowedCapabilities:
+  - testCapability
+  - testCapability1
+  - testCapability2
+  allowedFlexVolumes:
+    driver:
+    - testFlexVolume
+    - testFlexVolume1
+  allowedHostPaths:
+    pathPrefix: "/test/path"
+    readOnly: true
+  allowedProcMountTypes:
+  - testProcMount
+  - testProcMount1
+  allowedUnsafeSysctls:
+  - testSysctl
+  - testSysctl1
+  fsGroup:
+    ranges:
+      max: 2000
+      min: 500
+    rule: RunAsAny
+  hostIPC: false
+  hostNetwork: true
+  hostPID: true
+  hostPorts:
+    max: 25565
+    min: 8080
+  privileged: false  # Don't allow privileged pods!
+  # The rest fills in some required fields.
+  readOnlyRootFilesystem: true
+  requiredDropCapabilities:
+  - testDrop
+  - testDrop1
+  runAsGroup:
+    ranges:
+      max: 3131
+      min: 2999
+    rule: RunAsAny
+  runAsUser:
+    ranges:
+      max: 6700
+      min: 5700
+    rule: RunAsAny
+  runtimeClass:
+    allowedRuntimeClassNames:
+    - testAllowedClass
+    - testAllowedClass1
+    defaultRuntimeClassName: testAllowedClass
+  seLinux:
+    rule: RunAsAny
+    seLinuxOptions:
+      level: testLevel
+      role: testRole
+      type: testType
+      user: testUser
+  supplementalGroups:
+    ranges:
+      max: 10000
+      min: 9000
+    rule: RunAsAny
+  volumes:
+  - '*'
