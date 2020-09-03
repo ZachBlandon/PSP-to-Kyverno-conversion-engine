@@ -106,14 +106,17 @@ func writeFile (s *string, indent int) { //TODO remove indent var or make global
     // if newline is found
     if (*s)[i] == '\n' {
 
+      writeStr := []byte{}
       // then begin the next line with given number of spaces as indent
       for j := 0; j < indent * 2; j++ {
-        outputFile.Write([]byte(" "))
+        writeStr = append(writeStr, ' ')
       }
 
       // and write the string from start position to currently found newline
-      outputFile.Write([]byte((*s)[start:i]))
-      outputFile.Write([]byte("\n"))
+      writeStr = append(writeStr, []byte((*s)[start:i])...)
+      writeStr = append(writeStr, '\n')
+
+      outputFile.Write(writeStr)
 
       // if next line is a list item or out of bounds then do not increment
       if i < length - 1 && (*s)[i + 1] != '-' {
